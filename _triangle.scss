@@ -1,0 +1,47 @@
+/**
+ * Mixin for creating CSS triangles
+ *
+ * @param $class
+ *   the class you want to apply the triangle to
+ * @param $size
+ *   The size of the triangle
+ * @param $bgcolor
+ *   The color of the triangle
+ * @param $borderRadius
+ *   The border radius
+ * @param $rotate
+ *   The starting rotation of the triange
+ * @param  $posT
+ *   The top position in relation to the first positioned parent element
+ * @param $posL
+ *   The left position in relation to the first position
+ */
+@mixin triangle($class, $size, $bgcolor, $borderRadius, $rotate, $posT, $posL) {
+  .#{$class},
+  .#{$class}:before,
+  .#{$class}:after {
+    position: absolute;
+    width: $size;
+    height: $size;
+    border-top-right-radius: $borderRadius;
+    background-color: $bgcolor;
+    //this is needed so you can align center the whole triangle and no have it cascade into this
+    text-align: left;
+  }
+  .#{$class}:before,
+  .#{$class}:after {
+    content: '';
+  }
+
+  .#{$class} {
+    left: $posL;
+    top: $posT;
+    @include transform(rotate(-60deg + $rotate) skewX(-30deg) scale(1,.866));
+  }
+  .#{$class}:before {
+      @include transform(rotate(-135deg) skewX(-45deg) scale(1.414, 0.707) translate(0%, -50%));
+  }
+  .#{$class}:after {
+      @include transform(rotate(135deg) skewY(-45deg) scale(0.707, 1.414) translate(50%));
+  }
+}
