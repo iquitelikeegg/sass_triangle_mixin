@@ -10,13 +10,13 @@
  * @param $borderRadius
  *   The border radius
  * @param $rotate
- *   The starting rotation of the triange
- * @param  $posT
+ *   The starting rotation of the triangle
+ * @param [$posT]
  *   The top position in relation to the first positioned parent element
- * @param $posL
+ * @param [$posL]
  *   The left position in relation to the first position
  */
-@mixin triangle($class, $size, $bgcolor, $borderRadius, $rotate, $posT, $posL) {
+@mixin triangle($class, $size, $bgcolor, $borderRadius, $rotate, $posT:null, $posL:null) {
   .#{$class},
   .#{$class}:before,
   .#{$class}:after {
@@ -34,8 +34,12 @@
   }
 
   .#{$class} {
-    left: $posL;
-    top: $posT;
+    @if $posL != 'null' {
+      left: $posL;
+    }
+    @if $posT != 'null' {
+      top: $posT;
+    }
     @include transform(rotate(-60deg + $rotate) skewX(-30deg) scale(1,.866));
   }
   .#{$class}:before {
